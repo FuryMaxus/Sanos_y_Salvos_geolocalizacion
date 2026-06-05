@@ -4,7 +4,7 @@ from sqlalchemy import Uuid
 from geoalchemy2 import Geometry
 from advanced_alchemy.base import UUIDBase
 import uuid
-class petLocation(UUIDBase):
+class PetLocation(UUIDBase):
     __tablename__ = "pets_locations"
 
     pet_id: Mapped[uuid.UUID] = mapped_column(Uuid, index=True, nullable=False)
