@@ -1,13 +1,13 @@
 import msgspec
-import uuid
 
-class InputCoordinate(msgspec.Struct):
-    pet_id: uuid.UUID
-    latitude: float
-    longitude: float
+class DistanceRequest(msgspec.Struct):
+    origin_latitude: float
+    origin_longitude: float
+    target_latitude: float
+    target_longitude: float
 
     def __post_init__(self):
-        if not (-90.0 <= self.latitude <= 90.0):
-            raise ValueError("La latitud debe estar entre -90 y 90")
-        if not (-180.0 <= self.longitude <= 180.0):
-            raise ValueError("La longitud debe estar entre -180 y 180")
+        if not (-90.0 <= self.origin_latitude <= 90.0) or not (-90.0 <= self.target_latitude <= 90.0):
+            raise ValueError("Latitude must be between -90 and 90")
+        if not (-180.0 <= self.origin_longitude <= 180.0) or not (-180.0 <= self.target_longitude <= 180.0):
+            raise ValueError("Longitude must be between -180 and 180")
