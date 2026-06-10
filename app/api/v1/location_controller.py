@@ -8,16 +8,10 @@ from litestar.di import Provide
 from app.service.location_service import LocationService
 from app.domain.structs import LocationCreateRequest, LocationResponse, MessageResponse
 from shapely.geometry import Point
-from app.repository.location_repository import LocationRepository
 
-async def provide_location_service(db_session: AsyncSession) -> LocationService:
-    repo = LocationRepository(session=db_session)
-    return LocationService(repository=repo)
 
 class LocationController(Controller):
     path = "/locations"
-
-    dependencies = {"location_service": Provide(provide_location_service)}
 
     @post("/")
     async def save_location(
