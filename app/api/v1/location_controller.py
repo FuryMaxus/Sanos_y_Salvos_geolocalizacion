@@ -52,7 +52,6 @@ class LocationController(Controller):
         self,
         pet_id: uuid.UUID,
         location_service: LocationService
-    ) -> MessageResponse:
+    ) -> None:
         await location_service.delete_location(pet_id)
-        return MessageResponse(message="Location deleted successfully")
     
