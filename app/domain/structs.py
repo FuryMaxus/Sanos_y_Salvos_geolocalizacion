@@ -28,7 +28,8 @@ class LocationCreateRequest(msgspec.Struct):
         
 class LocationResponse(msgspec.Struct):
     pet_id: UUID
-    coordinate: str  # temporal
+    latitude: float
+    longitude: float
 
 class MessageResponse(msgspec.Struct):
     message: str

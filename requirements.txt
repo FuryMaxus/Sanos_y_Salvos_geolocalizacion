@@ -11,3 +11,4 @@ httpx
 python-dotenv
 litestar[jwt]
 psycopg2-binary
+shapely
