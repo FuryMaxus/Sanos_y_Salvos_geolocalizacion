@@ -33,3 +33,20 @@ class LocationResponse(msgspec.Struct):
 
 class MessageResponse(msgspec.Struct):
     message: str
+
+class RadiusRequest(msgspec.Struct):
+    latitude: float
+    longitude: float
+    radius_meters: float
+    def __post_init__(self):
+        if not (-90.0 <= self.latitude <= 90.0):
+            raise ValueError("Latitude must be between -90 and 90")
+        if not (-180.0 <= self.longitude <= 180.0):
+            raise ValueError("Longitude must be between -180 and 180")
+
+class PetDistanceItem(msgspec.Struct):
+    pet_id: UUID
+    distance_meters: float
+
+class RadiusResponse(msgspec.Struct):
+    pets: list[PetDistanceItem]
