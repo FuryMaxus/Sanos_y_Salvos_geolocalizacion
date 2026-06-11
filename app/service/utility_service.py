@@ -18,3 +18,21 @@ class UtilityService:
         )
         
         return result.scalar() or 0.0
+    
+    async def find_pets_in_radius(
+        self, lat: float, lon: float, radius_meters: float
+    ) -> list[dict]:
+        query = text("""
+            SELECT pet_id, distance 
+            FROM get_pets_in_radius_sp(:lat, :lon, :radius)
+        """)
+        
+        result = await self.db_session.execute(
+            query,
+            {"lat": lat, "lon": lon, "radius": radius_meters}
+        )
+        
+        return [
+            {"pet_id": row.pet_id, "distance_meters": row.distance} 
+            for row in result.fetchall()
+        ]

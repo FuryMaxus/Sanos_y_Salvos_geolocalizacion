@@ -14,6 +14,7 @@ def mock_location_service():
     mock.upsert_location = AsyncMock()
     mock.delete_location = AsyncMock()
     mock.get_location = AsyncMock()
+    mock.find_pets_in_radius = AsyncMock()
     return mock
 
 @pytest.fixture(scope="function")
