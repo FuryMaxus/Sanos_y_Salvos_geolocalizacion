@@ -1,0 +1,32 @@
+services:
+  geo_db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: geo_password
+      POSTGRES_DB: geo_db
+    ports:
+      - "5435:5432"
+    volumes:
+      - geo_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d geo_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  geo_ms:
+    build:
+      context: .
+    ports:
+      - "8004:8004"
+    environment:
+      - PORT=8004
+      - DATABASE_URL=postgresql+asyncpg://user:geo_password@geo_db:5432/geo_db
+      - SECRET_KEY=clave_super_secreta
+    depends_on:
+      geo_db:
+        condition: service_healthy
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+volumes:
+  geo_data:
